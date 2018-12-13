@@ -219,6 +219,9 @@
                         <barButtonItem key="rightBarButtonItem" image="list" width="10" id="wdF-E6-Yms">
                             <inset key="imageInsets" minX="0.0" minY="0.0" maxX="2" maxY="0.0"/>
                             <color key="tintColor" name="second"/>
+                            <connections>
+                                <action selector="changeLayout:" destination="EqG-R1-ojd" id="max-9l-TEq"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                 </collectionViewController>

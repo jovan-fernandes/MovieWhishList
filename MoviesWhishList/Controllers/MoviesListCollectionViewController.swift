@@ -32,19 +32,10 @@ class MoviesListCollectionViewController: UICollectionViewController {
     var searchText: String?
     var movieListType: MoviesListType = .popular
     
-    @IBOutlet weak var searchBar: UISearchBar!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         loadMovies()
-        // Uncomment the following line to preserve selection between presentations
-//         self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-//        self.collectionView!.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-//        collectionView?.register(MovieCollectionViewCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseIdentifier)
-        // Do any additional setup after loading the view.
     }
 
     func loadMovies() {
@@ -98,7 +89,6 @@ class MoviesListCollectionViewController: UICollectionViewController {
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc = segue.destination as! MovieDetailViewController
         let indexPaths = self.collectionView!.indexPathsForSelectedItems!
@@ -106,7 +96,10 @@ class MoviesListCollectionViewController: UICollectionViewController {
         vc.movie = movies[indexPath.row]
     }
     
-
+    @IBAction func changeLayout(_ sender: UIBarButtonItem) {
+//        collectionViewLayout.
+    }
+    
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
