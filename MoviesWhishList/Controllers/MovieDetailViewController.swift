@@ -67,6 +67,15 @@ class MovieDetailViewController: UIViewController {
     */
 
     @IBAction func btnFavoritar(_ sender: UIButton) {
-    
+        do{
+            let staredMovie = StaredMovie(context: context, movie: movie)
+            
+            try context.save()
+        } catch {
+          debugPrint("[MovieDetailViewController](btnFavoritar) " + error.localizedDescription)
+        }
+        
+        navigationController?.popViewController(animated: true)
+
     }
 }

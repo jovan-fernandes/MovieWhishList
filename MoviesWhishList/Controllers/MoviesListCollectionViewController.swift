@@ -38,7 +38,7 @@ class MoviesListCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         loadMovies()
         // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+//         self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
 //        self.collectionView!.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -83,18 +83,6 @@ class MoviesListCollectionViewController: UICollectionViewController {
         }
     }
     
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let vc = segue.destination as! MovieDetailViewController
-        let indexPaths = self.collectionView!.indexPathsForSelectedItems!
-        let indexPath = indexPaths[0]
-        vc.movie = movies[indexPath.row]
-    }
-    
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        debugPrint("seleectedddd")
-    }
-    
     fileprivate func clearSearchFlags() {
         movies = []
         currentPage = 0
@@ -107,15 +95,17 @@ class MoviesListCollectionViewController: UICollectionViewController {
     }
     
     
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        let vc = segue.destination as! MovieDetailViewController
+        let indexPaths = self.collectionView!.indexPathsForSelectedItems!
+        let indexPath = indexPaths[0]
+        vc.movie = movies[indexPath.row]
     }
-    */
+    
 
     // MARK: UICollectionViewDataSource
 
@@ -147,37 +137,6 @@ class MoviesListCollectionViewController: UICollectionViewController {
             debugPrint("[MoviesListCollectionViewController] Carregando mais filmes. Atualmente Movies \(movies.count) de \(totalOfMovies)")
         }
     }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
 
 }
 

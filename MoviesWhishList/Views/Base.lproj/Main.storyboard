@@ -14,19 +14,63 @@
         <!--Stared Movies-->
         <scene sceneID="CSk-RG-4gr">
             <objects>
-                <tableViewController id="pmk-Yr-HCj" sceneMemberID="viewController">
+                <tableViewController id="pmk-Yr-HCj" customClass="StaredMoviesTableViewController" customModule="MoviesWhishList" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ECq-N9-nIl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="sectionIndexBackgroundColor" name="second"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="YMw-Hl-4hi">
+                            <rect key="frame" x="0.0" y="178" width="375" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" name="second"/>
+                        </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="mlE-VV-aaT">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="staredMovieCell" rowHeight="150" id="mlE-VV-aaT" customClass="StaredMovieTableViewCell" customModule="MoviesWhishList" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mlE-VV-aaT" id="wia-am-IN7">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="onR-yP-EPA">
+                                            <rect key="frame" x="8" y="6" width="60" height="120"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="dWu-sB-XcY"/>
+                                                <constraint firstAttribute="height" constant="120" id="f56-qc-c0i"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Nome do Filme" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KGO-8B-cyv">
+                                            <rect key="frame" x="72" y="6" width="295" height="29"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                            <color key="textColor" name="main"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Release Date" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hOe-qW-Fmb">
+                                            <rect key="frame" x="72" y="43" width="279" height="76"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="18"/>
+                                            <color key="textColor" name="main"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="hOe-qW-Fmb" secondAttribute="trailing" constant="8" id="FP8-Ea-a6l"/>
+                                        <constraint firstItem="hOe-qW-Fmb" firstAttribute="top" secondItem="KGO-8B-cyv" secondAttribute="bottom" constant="8" id="P8T-Ba-mhC"/>
+                                        <constraint firstAttribute="trailing" secondItem="KGO-8B-cyv" secondAttribute="trailing" constant="8" id="SDd-fx-Pg5"/>
+                                        <constraint firstItem="onR-yP-EPA" firstAttribute="leading" secondItem="wia-am-IN7" secondAttribute="leading" constant="8" id="ZYc-vL-YjD"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="hOe-qW-Fmb" secondAttribute="bottom" constant="20" id="gHq-lu-zcS"/>
+                                        <constraint firstItem="KGO-8B-cyv" firstAttribute="leading" secondItem="onR-yP-EPA" secondAttribute="trailing" constant="4" id="hJq-tZ-62b"/>
+                                        <constraint firstItem="onR-yP-EPA" firstAttribute="top" secondItem="wia-am-IN7" secondAttribute="top" constant="6" id="mXZ-vg-sBo"/>
+                                        <constraint firstItem="KGO-8B-cyv" firstAttribute="top" secondItem="onR-yP-EPA" secondAttribute="top" id="uAJ-Nk-qGV"/>
+                                        <constraint firstItem="hOe-qW-Fmb" firstAttribute="leading" secondItem="KGO-8B-cyv" secondAttribute="leading" id="xI6-nA-TYS"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" name="second"/>
+                                <connections>
+                                    <outlet property="ivMoviePoster" destination="onR-yP-EPA" id="Is9-9x-LZi"/>
+                                    <outlet property="lbMovieName" destination="KGO-8B-cyv" id="vXx-ge-OFY"/>
+                                    <outlet property="lbMovieReleaseDate" destination="hOe-qW-Fmb" id="XPA-aY-jEF"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -100,7 +144,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="180" height="120"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iTunesArtwork" translatesAutoresizingMaskIntoConstraints="NO" id="hQV-ia-f5l">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TheLordOfTheRings" translatesAutoresizingMaskIntoConstraints="NO" id="hQV-ia-f5l">
                                             <rect key="frame" x="2" y="4" width="60" height="120"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="60" id="tlV-Vz-ryR"/>
@@ -143,7 +187,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
-                                <searchBar contentMode="redraw" barStyle="black" showsCancelButton="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vqt-wF-oW3">
+                                <searchBar contentMode="redraw" barStyle="black" placeholder="Digite o nome do filme" showsCancelButton="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vqt-wF-oW3">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                     <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
                                     <scopeButtonTitles>
@@ -318,7 +362,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="iTunesArtwork" width="512" height="512"/>
+        <image name="TheLordOfTheRings" width="292" height="450"/>
         <image name="list" width="24" height="24"/>
         <image name="movie" width="24" height="24"/>
         <image name="star" width="24" height="24"/>

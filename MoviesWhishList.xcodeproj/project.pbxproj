@@ -11,6 +11,10 @@
 		4C10AAF621C1FB52001928DD /* TMDB_API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C10AAF521C1FB52001928DD /* TMDB_API.swift */; };
 		4C10AAF821C20280001928DD /* TMDBContants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C10AAF721C20280001928DD /* TMDBContants.swift */; };
 		4C10AAFA21C24BD9001928DD /* SearchCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C10AAF921C24BD9001928DD /* SearchCollectionReusableView.swift */; };
+		4C10AAFE21C2732C001928DD /* StaredMoviesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C10AAFD21C2732C001928DD /* StaredMoviesTableViewController.swift */; };
+		4C10AB0021C2769A001928DD /* StaredMovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C10AAFF21C2769A001928DD /* StaredMovieTableViewCell.swift */; };
+		4C10AB0221C278D6001928DD /* ViewControllerWithCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C10AB0121C278D6001928DD /* ViewControllerWithCoreData.swift */; };
+		4C10AB0421C29193001928DD /* StaredMoviesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C10AB0321C29193001928DD /* StaredMoviesManager.swift */; };
 		4CBD53D821BF55F5008E1838 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD53D721BF55F5008E1838 /* AppDelegate.swift */; };
 		4CBD53DD21BF55F5008E1838 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CBD53DB21BF55F5008E1838 /* Main.storyboard */; };
 		4CBD53E021BF55F5008E1838 /* MoviesWhishList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD53DE21BF55F5008E1838 /* MoviesWhishList.xcdatamodeld */; };
@@ -51,6 +55,10 @@
 		4C10AAF521C1FB52001928DD /* TMDB_API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDB_API.swift; sourceTree = "<group>"; };
 		4C10AAF721C20280001928DD /* TMDBContants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBContants.swift; sourceTree = "<group>"; };
 		4C10AAF921C24BD9001928DD /* SearchCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionReusableView.swift; sourceTree = "<group>"; };
+		4C10AAFD21C2732C001928DD /* StaredMoviesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaredMoviesTableViewController.swift; sourceTree = "<group>"; };
+		4C10AAFF21C2769A001928DD /* StaredMovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaredMovieTableViewCell.swift; sourceTree = "<group>"; };
+		4C10AB0121C278D6001928DD /* ViewControllerWithCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerWithCoreData.swift; sourceTree = "<group>"; };
+		4C10AB0321C29193001928DD /* StaredMoviesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaredMoviesManager.swift; sourceTree = "<group>"; };
 		4CBD53D421BF55F5008E1838 /* MoviesWhishList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoviesWhishList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBD53D721BF55F5008E1838 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CBD53DC21BF55F5008E1838 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -153,6 +161,7 @@
 		4CBD53D621BF55F5008E1838 /* MoviesWhishList */ = {
 			isa = PBXGroup;
 			children = (
+				4C10AB0121C278D6001928DD /* ViewControllerWithCoreData.swift */,
 				4CF8BD1621C0901C00EC2EA7 /* TMDB_Data.swift */,
 				4CBD53D721BF55F5008E1838 /* AppDelegate.swift */,
 				4CC00D4721C0CEDA009A8C93 /* Utils */,
@@ -163,6 +172,7 @@
 				4CBD53DE21BF55F5008E1838 /* MoviesWhishList.xcdatamodeld */,
 				4C10AAF521C1FB52001928DD /* TMDB_API.swift */,
 				4C10AAF721C20280001928DD /* TMDBContants.swift */,
+				4C10AB0321C29193001928DD /* StaredMoviesManager.swift */,
 			);
 			path = MoviesWhishList;
 			sourceTree = "<group>";
@@ -209,6 +219,8 @@
 				4CF8BD1821C0936900EC2EA7 /* MovieCollectionViewCell.swift */,
 				4CF8BD1A21C0A65D00EC2EA7 /* MovieDetailViewController.swift */,
 				4C10AAF921C24BD9001928DD /* SearchCollectionReusableView.swift */,
+				4C10AAFD21C2732C001928DD /* StaredMoviesTableViewController.swift */,
+				4C10AAFF21C2769A001928DD /* StaredMovieTableViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -429,12 +441,16 @@
 				4C10AAFA21C24BD9001928DD /* SearchCollectionReusableView.swift in Sources */,
 				4C10AAF621C1FB52001928DD /* TMDB_API.swift in Sources */,
 				4CBD53E021BF55F5008E1838 /* MoviesWhishList.xcdatamodeld in Sources */,
+				4C10AAFE21C2732C001928DD /* StaredMoviesTableViewController.swift in Sources */,
 				4C10AAF821C20280001928DD /* TMDBContants.swift in Sources */,
 				4CF8BD1921C0936900EC2EA7 /* MovieCollectionViewCell.swift in Sources */,
+				4C10AB0221C278D6001928DD /* ViewControllerWithCoreData.swift in Sources */,
+				4C10AB0021C2769A001928DD /* StaredMovieTableViewCell.swift in Sources */,
 				4CBD53D821BF55F5008E1838 /* AppDelegate.swift in Sources */,
 				4CC00D4621C0CED7009A8C93 /* DateUtils.swift in Sources */,
 				4CF8BD1B21C0A65D00EC2EA7 /* MovieDetailViewController.swift in Sources */,
 				4CF8BD1721C0901C00EC2EA7 /* TMDB_Data.swift in Sources */,
+				4C10AB0421C29193001928DD /* StaredMoviesManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
