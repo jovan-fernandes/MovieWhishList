@@ -6,6 +6,8 @@ target 'MoviesWhishList' do
   use_frameworks!
 
   # Pods for MoviesWhishList
+  pod 'Alamofire', '~> 4.7'
+  pod 'Kingfisher', '~> 5.0'
 
   target 'MoviesWhishListTests' do
     inherit! :search_paths
