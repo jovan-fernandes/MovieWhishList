@@ -23,7 +23,6 @@ class MoviesListCollectionViewController: UICollectionViewController {
     
     var activityIndicator: ActivityIndicatorFooterCollectionReusableView?
     
-    var movies: [MovieData] = []
     var movieSelected: ((MovieData) -> ())? = { _ in }
     
  
@@ -96,7 +95,7 @@ class MoviesListCollectionViewController: UICollectionViewController {
         let vc = segue.destination as! MovieDetailViewController
         let indexPaths = self.collectionView!.indexPathsForSelectedItems!
         let indexPath = indexPaths[0]
-        vc.movie = movies[indexPath.row]
+        vc.movie = viewModel.movies[indexPath.row]
     }
     
     // MARK: - Change FlowLayoutType
@@ -118,19 +117,19 @@ class MoviesListCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies.count
+        return viewModel.movies.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MovieCollectionViewCell
-        let movie = movies[indexPath.row]
-        cell.prepareCell(with: movie)
+        
+        cell.prepareCell(with: viewModel.movies[indexPath.row])
     
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        movieSelected?(movies[indexPath.row])
+        movieSelected?(viewModel.movies[indexPath.row])
     }
 
 }
@@ -157,7 +156,7 @@ extension MoviesListCollectionViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         debugPrint("[MoviesListCollectionVIewController](searchBarCancelButtonClicked)")
         movieListType = .popular
-        movies.removeAll()
+        viewModel.resetLoad()
         searchText = nil
         loadMovies()
         searchBar.text = ""
@@ -168,7 +167,7 @@ extension MoviesListCollectionViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchQuery = searchBar.text, !searchQuery.isEmpty {
-            movies.removeAll()
+            viewModel.resetLoad()
             searchText = nil
             movieListType = .search
             self.showCollectionViewMessage(message: "Pesquisando.....")
@@ -248,7 +247,6 @@ extension MoviesListCollectionViewController {
 
 extension MoviesListCollectionViewController: MoviesCollectionDelegate {
     func didRecieveMovies(movies: [MovieData]) {
-        self.movies += movies
         DispatchQueue.main.async {
             self.clearColletionViewMessage()
             self.collectionView.reloadData()
@@ -258,10 +256,8 @@ extension MoviesListCollectionViewController: MoviesCollectionDelegate {
     func didRecieveSearchResults(movies: [MovieData]) {
         if movies.isEmpty {
             self.showCollectionViewMessage(message: "Não foram encontrados resultados para a pesquisa")
-            self.movies.removeAll()
         } else {
             self.clearColletionViewMessage()
-            self.movies += movies
         }
         DispatchQueue.main.async {
             self.collectionView.reloadData()
@@ -269,7 +265,7 @@ extension MoviesListCollectionViewController: MoviesCollectionDelegate {
     }
     
     func didRecieveMoviesError(error: TMDBError) {
-        movies.removeAll()
+        viewModel.resetLoad()
         searchText = nil
         self.showCollectionViewMessage(message: "Ops!! 😰😰😰😰😰😰😰")
     }

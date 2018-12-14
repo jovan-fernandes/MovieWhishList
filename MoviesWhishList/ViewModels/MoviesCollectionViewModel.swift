@@ -23,7 +23,7 @@ class MoviesCollectionViewModel {
     var totalOfMovies = 0
     var loadMovieType: MoviesListType = .popular
     
-     var movies: [MovieData] = []
+    var movies: [MovieData] = []
     
     var delegate: MoviesCollectionDelegate
     
@@ -60,11 +60,12 @@ class MoviesCollectionViewModel {
                     self.totalOfPages = tmdbInfo.totalPages
                     self.totalOfMovies = tmdbInfo.totalResults
                     debugPrint("[MoviesCollectionViewModel](Search) Total de Resultados: \(self.totalOfMovies) Total de Paginas: \(self.totalOfPages), Pagina Corrente: \(self.currentPage)")
+                    self.movies += tmdbInfo.movies
                     self.delegate.didRecieveSearchResults(movies: tmdbInfo.movies)
                 }
             }) { (error) in
                 self.loadingResults = false
-                self.clearSearchFlags()
+                self.resetLoad()
                 self.delegate.didRecieveMoviesError(error: error!)
             }
         } else {
@@ -75,11 +76,12 @@ class MoviesCollectionViewModel {
                     self.totalOfPages = tmdbInfo.totalPages
                     self.totalOfMovies = tmdbInfo.totalResults
                     debugPrint("[MoviesCollectionViewModel](PopularMovies)  Total de Resultados: \(self.totalOfMovies) Total de Paginas: \(self.totalOfPages), Pagina Corrente: \(self.currentPage)")
+                    self.movies += tmdbInfo.movies
                     self.delegate.didRecieveMovies(movies: tmdbInfo.movies)
                 }
             }) { (error) in
                 self.loadingResults = false
-                self.clearSearchFlags()
+                self.resetLoad()
                 debugPrint("[MoviesCollectionViewModel](PopularMovies) Error of Fetch Results for Popular Movies")
                 self.delegate.didRecieveMoviesError(error: error!)
             }
@@ -88,9 +90,11 @@ class MoviesCollectionViewModel {
 
     }
 
-    fileprivate func clearSearchFlags() {
+     func resetLoad() {
         currentPage = 0
         totalOfPages = 0
         totalOfMovies = 0
+        movies.removeAll()
     }
+    
 }
