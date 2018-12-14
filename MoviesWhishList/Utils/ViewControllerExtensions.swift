@@ -17,6 +17,19 @@ extension UIViewController {
         return appDelegate.persistentContainer.viewContext
     }
     
+    
+    func showMessage(_ message: String){
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showErrorMessage(_ message: String){
+        let alert = UIAlertController(title: "Ops!", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 }
 
 extension StaredMovie {

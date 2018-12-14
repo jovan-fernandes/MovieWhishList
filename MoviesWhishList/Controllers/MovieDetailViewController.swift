@@ -20,6 +20,8 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var lbHomePage: UILabel!
     @IBOutlet weak var lbGenres: UILabel!
     
+    let staredMoviesManager = StaredMoviesManager.shared
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,26 +64,15 @@ class MovieDetailViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     @IBAction func btnFavoritar(_ sender: UIButton) {
-        do{
-            let staredMovie = StaredMovie(context: context, movie: movie)
-            
-            try context.save()
-        } catch {
-          debugPrint("[MovieDetailViewController](btnFavoritar) " + error.localizedDescription)
+        do {
+            try staredMoviesManager.addStaredMovie(movie, context: context)
+            navigationController?.popViewController(animated: true)
+        } catch StaredMovieManagerError.alreadyExistsError(let e){
+            showMessage(e)
+        }catch {
+            showErrorMessage("Ocorreu um erro ao favoritar")
+            debugPrint("Erro ao favoritar ")
         }
-        
-        navigationController?.popViewController(animated: true)
-
     }
 }
