@@ -37,7 +37,7 @@ class StaredMoviesManager {
         }
     }
     
-    fileprivate func getStaredMovieBy(id id: Int,_ context: NSManagedObjectContext) throws -> [StaredMovie] {
+    fileprivate func getStaredMovieBy(id: Int,_ context: NSManagedObjectContext) throws -> [StaredMovie] {
         do{
             let fecthRequest: NSFetchRequest<StaredMovie> = StaredMovie.fetchRequest()
             let predicate = NSPredicate(format: "id == %i", Int64(id))

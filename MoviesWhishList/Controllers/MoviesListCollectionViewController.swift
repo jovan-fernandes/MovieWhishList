@@ -158,6 +158,7 @@ extension MoviesListCollectionViewController: UISearchBarDelegate {
         movieListType = .popular
         viewModel.resetLoad()
         searchText = nil
+        self.navigationItem.title = "Popular Movies"
         loadMovies()
         searchBar.text = ""
         self.collectionView!.becomeFirstResponder()
@@ -170,6 +171,7 @@ extension MoviesListCollectionViewController: UISearchBarDelegate {
             viewModel.resetLoad()
             searchText = nil
             movieListType = .search
+            self.navigationItem.title = "Search Results"
             self.showCollectionViewMessage(message: "Pesquisando.....")
             searchText = searchQuery
             loadMovies()

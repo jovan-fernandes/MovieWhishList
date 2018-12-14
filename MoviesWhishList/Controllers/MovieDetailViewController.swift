@@ -22,28 +22,18 @@ class MovieDetailViewController: UIViewController {
     
     let staredMoviesManager = StaredMoviesManager.shared
     
+    var viewModel: MoviesDetailViewModel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel = MoviesDetailViewModel(self)
         prepare(movie: movie)
         loadAditionalData()
     }
     
     func loadAditionalData() {
-        TMDB_API().loadMovie(withId: movie!.id, success: { (movieDetail) in
-            DispatchQueue.main.async {
-                self.lbHomePage.text = movieDetail?.homepage
-                self.lbGenres.text = ""
-                for genre in (movieDetail?.genres)! {
-                    self.lbGenres.text = self.lbGenres.text! + genre.name + " "
-                }
-            }
-        }) { (error) in
-            DispatchQueue.main.async {
-                self.lbHomePage.text = ""
-                self.lbGenres.text = ""
-            }
-        }
+        viewModel.loadMovieData(id: movie.id)
     }
     
     
@@ -75,4 +65,26 @@ class MovieDetailViewController: UIViewController {
             debugPrint("Erro ao favoritar ")
         }
     }
+}
+
+extension MovieDetailViewController: MovieDetailDelegate {
+    func didRecieveMovieData(movie: MovieDetail) {
+        DispatchQueue.main.async {
+            self.lbHomePage.text = movie.homepage
+            self.lbGenres.text = ""
+            for genre in (movie.genres)! {
+                self.lbGenres.text = self.lbGenres.text! + genre.name + " "
+            }
+        }
+    }
+    
+    func didRecieveMovieError(error: TMDBError) {
+        DispatchQueue.main.async {
+            self.lbHomePage.text = ""
+            self.lbGenres.text = ""
+        }
+    }
+    
+
+    
 }

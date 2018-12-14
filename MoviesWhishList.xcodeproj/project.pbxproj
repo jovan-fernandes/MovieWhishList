@@ -21,6 +21,7 @@
 		4C677BBE21C32EEE0045A298 /* ActivityIndicatorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C677BBD21C32EEE0045A298 /* ActivityIndicatorCollectionViewCell.swift */; };
 		4C677BC121C374760045A298 /* OsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C677BC021C374760045A298 /* OsUtils.swift */; };
 		4C677BC521C394E00045A298 /* MoviesCollectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C677BC421C394E00045A298 /* MoviesCollectionViewModel.swift */; };
+		4C677BC721C3AD320045A298 /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C677BC621C3AD320045A298 /* MovieDetailViewModel.swift */; };
 		4CBD53D821BF55F5008E1838 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD53D721BF55F5008E1838 /* AppDelegate.swift */; };
 		4CBD53DD21BF55F5008E1838 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CBD53DB21BF55F5008E1838 /* Main.storyboard */; };
 		4CBD53E021BF55F5008E1838 /* MoviesWhishList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD53DE21BF55F5008E1838 /* MoviesWhishList.xcdatamodeld */; };
@@ -71,6 +72,7 @@
 		4C677BBD21C32EEE0045A298 /* ActivityIndicatorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C677BC021C374760045A298 /* OsUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsUtils.swift; sourceTree = "<group>"; };
 		4C677BC421C394E00045A298 /* MoviesCollectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesCollectionViewModel.swift; sourceTree = "<group>"; };
+		4C677BC621C3AD320045A298 /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
 		4CBD53D421BF55F5008E1838 /* MoviesWhishList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoviesWhishList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CBD53D721BF55F5008E1838 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CBD53DC21BF55F5008E1838 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			children = (
 				4C10AB0321C29193001928DD /* StaredMoviesManager.swift */,
 				4C677BC421C394E00045A298 /* MoviesCollectionViewModel.swift */,
+				4C677BC621C3AD320045A298 /* MovieDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -520,6 +523,7 @@
 				4C677BC521C394E00045A298 /* MoviesCollectionViewModel.swift in Sources */,
 				4CBD53D821BF55F5008E1838 /* AppDelegate.swift in Sources */,
 				4CC00D4621C0CED7009A8C93 /* DateUtils.swift in Sources */,
+				4C677BC721C3AD320045A298 /* MovieDetailViewModel.swift in Sources */,
 				4CF8BD1B21C0A65D00EC2EA7 /* MovieDetailViewController.swift in Sources */,
 				4CF8BD1721C0901C00EC2EA7 /* TMDB_Data.swift in Sources */,
 				4C10AB0421C29193001928DD /* StaredMoviesManager.swift in Sources */,
