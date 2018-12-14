@@ -28,13 +28,18 @@ class MovieDetailViewController: UIViewController {
     }
     
     func loadAditionalData() {
-        TMDB_API().loadMovie(withId: movie!.id) { (movieDetail) in
+        TMDB_API().loadMovie(withId: movie!.id, success: { (movieDetail) in
             DispatchQueue.main.async {
                 self.lbHomePage.text = movieDetail?.homepage
                 self.lbGenres.text = ""
                 for genre in (movieDetail?.genres)! {
                     self.lbGenres.text = self.lbGenres.text! + genre.name + " "
                 }
+            }
+        }) { (error) in
+            DispatchQueue.main.async {
+                self.lbHomePage.text = ""
+                self.lbGenres.text = ""
             }
         }
     }
@@ -49,9 +54,10 @@ class MovieDetailViewController: UIViewController {
         lbGenres.text = ""
         if let moviePoster = movie.posterPath {
             ivMoviePoster.kf.indicatorType = .activity
+            (ivMoviePoster.kf.indicator?.view as? UIActivityIndicatorView)?.color = .red
             ivMoviePoster.kf.setImage(with: TMDB_API.buildThumbnailUrl(for: moviePoster, size: .w154))
         } else {
-            ivMoviePoster.image = nil
+            ivMoviePoster.image = UIImage(named: "movie")
         }
     }
     

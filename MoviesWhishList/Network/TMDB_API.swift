@@ -10,6 +10,10 @@ import Foundation
 import Alamofire
 
 
+enum TMDBError: Error {
+    case noResponse, genericError
+}
+
 class TMDB_API {
     
 
@@ -18,59 +22,60 @@ class TMDB_API {
     
  
     
-    typealias TMDB_Data = (TMDB_Info?) -> Void
-    typealias MovieDetail_Data = (MovieDetail?) -> Void
+    typealias MoviesSuccesCompletion = (TMDB_Info?) -> Void
+    typealias MoviesErrorCompletion = (TMDBError?) -> Void
+    typealias MovieDetailSuccessCompletion = (MovieDetail?) -> Void
     
     
-    func loadMovies(page: Int = 1, callback: @escaping TMDB_Data) {
+    func loadMovies(page: Int = 1, success: @escaping MoviesSuccesCompletion, fail: @escaping MoviesErrorCompletion) {
         Alamofire.request(self.buildMoviesURL(for: .popularMovies,
                                               withPathExtension: nil,
                                               addtionalParams: [TMDBQueryParamKey.API_PAGE: String(page)])).responseJSON { (res) in
             guard let data = res.data, res.response?.statusCode == 200 else {
-                callback(nil)
+                fail(TMDBError.genericError)
                 return
             }
             do {
                 let tmdbInfo = try JSONDecoder().decode(TMDB_Info.self, from: data)
-                callback(tmdbInfo)
+                success(tmdbInfo)
             } catch {
                 debugPrint("[TMDB_API](loadMovies)" + error.localizedDescription)
-                callback(nil)
+                fail(TMDBError.genericError)
             }
             
         }
     }
     
-    func loadMovie(withId movieId: Int, callback: @escaping MovieDetail_Data) {
+    func loadMovie(withId movieId: Int, success: @escaping MovieDetailSuccessCompletion, fail: @escaping MoviesErrorCompletion) {
         Alamofire.request(self.buildMoviesURL(for: .movie, withPathExtension: "/\(movieId)")).responseJSON { (res) in
             guard let data = res.data, res.response?.statusCode == 200 else {
-                callback(nil)
+                fail(TMDBError.genericError)
                 return
             }
             do {
                 let movieDetailInfo = try JSONDecoder().decode(MovieDetail.self, from: data)
-                callback(movieDetailInfo)
+                success(movieDetailInfo)
             } catch {
                 debugPrint("[TMDB_API](loadMovie)" + error.localizedDescription)
-                callback(nil)
+                fail(TMDBError.genericError)
             }
             
         }
     }
     
     
-    func searchMovie(withName searchQuery: String, page: Int = 1,callback: @escaping TMDB_Data) {
+    func searchMovie(withName searchQuery: String, page: Int = 1,success: @escaping MoviesSuccesCompletion, fail: @escaping MoviesErrorCompletion) {
         Alamofire.request(self.buildSearchUrl(withSearchQuery: searchQuery, addtionalParams: [TMDBQueryParamKey.API_PAGE: String(page)])).responseJSON { (res) in
             guard let data = res.data, res.response?.statusCode == 200 else {
-                callback(nil)
+                fail(TMDBError.genericError)
                 return
             }
             do {
                 let tmdbInfo = try JSONDecoder().decode(TMDB_Info.self, from: data)
-                callback(tmdbInfo)
+                success(tmdbInfo)
             } catch {
                 debugPrint("[TMDB_API](searchMovies)" + error.localizedDescription)
-                callback(nil)
+                fail(TMDBError.genericError)
             }
             
         }

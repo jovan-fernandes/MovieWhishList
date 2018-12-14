@@ -26,9 +26,10 @@ class MovieCollectionViewCell: UICollectionViewCell {
         lbRelease.text = movie.releaseDate
         if let moviePoster = movie.posterPath {
             ivMoviePoster.kf.indicatorType = .activity
+            (ivMoviePoster.kf.indicator?.view as? UIActivityIndicatorView)?.color = .red
             ivMoviePoster.kf.setImage(with: TMDB_API.buildThumbnailUrl(for: moviePoster))
         } else {
-            ivMoviePoster.image = nil
+            ivMoviePoster.image = UIImage(named: "movie")
         }
         ivMoviePoster.layer.borderColor = UIColor.gray.cgColor
         ivMoviePoster.layer.borderWidth = 1
