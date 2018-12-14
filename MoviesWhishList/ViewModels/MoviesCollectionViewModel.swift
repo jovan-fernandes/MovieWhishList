@@ -22,7 +22,8 @@ class MoviesCollectionViewModel {
     var totalOfPages = 0
     var totalOfMovies = 0
     var loadMovieType: MoviesListType = .popular
-    
+    //TODO: a medida que o usuário vai fazendo scroll vai enchendo a memoria,
+    // trocar para uma estratégia em que não deixe tudo alocado na memoria
     var movies: [MovieData] = []
     
     var delegate: MoviesCollectionDelegate

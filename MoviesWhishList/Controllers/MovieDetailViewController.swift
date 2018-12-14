@@ -25,11 +25,37 @@ class MovieDetailViewController: UIViewController {
     var viewModel: MoviesDetailViewModel!
     
     
+    fileprivate func addUrlAction() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(MovieDetailViewController.openHomePage))
+        lbHomePage.isUserInteractionEnabled = true
+        lbHomePage.addGestureRecognizer(tap)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel = MoviesDetailViewModel(self)
         prepare(movie: movie)
+        
         loadAditionalData()
+    }
+    
+    
+    @objc func openHomePage(){
+        if let url = URL(string: self.lbHomePage.text!) {
+            UIApplication.shared.open(url, options: [:])
+            
+              //Caso fosse video do youtube:
+//            let youtubeId = "xxxxxxxxxx"
+//            var url = URL(string:"youtube://\(youtubeId)")!
+//            if !UIApplication.shared.canOpenURL(url)  {
+//                url = URL(string:"http://www.youtube.com/watch?v=\(youtubeId)")!
+//            }else{
+//                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+//            }
+
+          
+           
+        }
     }
     
     func loadAditionalData() {
@@ -70,7 +96,12 @@ class MovieDetailViewController: UIViewController {
 extension MovieDetailViewController: MovieDetailDelegate {
     func didRecieveMovieData(movie: MovieDetail) {
         DispatchQueue.main.async {
-            self.lbHomePage.text = movie.homepage
+            if let hp = movie.homepage {
+                self.lbHomePage.text = hp
+                self.addUrlAction()
+            }else{
+                self.lbHomePage.text = ""
+            }
             self.lbGenres.text = ""
             for genre in (movie.genres)! {
                 self.lbGenres.text = self.lbGenres.text! + genre.name + " "
