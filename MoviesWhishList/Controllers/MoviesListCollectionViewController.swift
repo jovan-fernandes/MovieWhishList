@@ -10,8 +10,9 @@ import UIKit
 
 private let reuseIdentifier = "MovieCollectionViewCell"
 private let reuseHeaderIdentifier = "CollectionViewHeader"
+private let footerViewReuseIdentifier = "RefreshFooterView"
+private let acitivityIndicatorReuseIdentifier = "activityIndicatorCell"
 
-private let autoScrollIndex = 10
 
 enum MoviesListType: String {
     case popular = "popular"
@@ -21,49 +22,51 @@ enum MoviesListType: String {
 class MoviesListCollectionViewController: UICollectionViewController {
     
     var activityIndicator: ActivityIndicatorFooterCollectionReusableView?
-    let footerViewReuseIdentifier = "RefreshFooterView"
-    let acitivityIndicatorReuseIdentifier = "activityIndicatorCell"
     
     var movies: [MovieData] = []
     var movieSelected: ((MovieData) -> ())? = { _ in }
     
-    var loadingResults = false
-    var currentPage = 0
-    var totalOfPages = 0
-    var totalOfMovies = 0
-    var searchActive = false
+ 
     var searchText: String?
     var movieListType: MoviesListType = .popular
     
     var flowLayoutInitialSize: CGSize?
     var lbCollectionViewMessage = UILabel()
     
+    var viewModel: MoviesCollectionViewModel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.collectionView.register(UINib(nibName: "ActivityIndicatorFooterCollectionReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerViewReuseIdentifier)
-        self.collectionView.register(UINib(nibName: "ActivityIndicatorCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: acitivityIndicatorReuseIdentifier)
+        configureActivityIndicator()
         
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.bounces = true
         
+        self.viewModel = MoviesCollectionViewModel(self)
         
         let flowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         flowLayoutInitialSize = flowLayout.itemSize
         
         showCollectionViewMessage(message: "Buscando filmes populares")
+        
         loadMovies()
     }
     
-    
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         debugPrint("[MoviesListCollectionViewController](didReceiveMemoryWarning) Memory Warning!!!!!")
     }
     
-    fileprivate func showCollectionViewMessage(message: String) {
+    
+    private func configureActivityIndicator() {
+        self.collectionView.register(UINib(nibName: "ActivityIndicatorFooterCollectionReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerViewReuseIdentifier)
+        self.collectionView.register(UINib(nibName: "ActivityIndicatorCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: acitivityIndicatorReuseIdentifier)
+    }
+
+    
+    private func showCollectionViewMessage(message: String) {
         DispatchQueue.main.async {
             self.lbCollectionViewMessage.text = message
             self.lbCollectionViewMessage.textAlignment = .center
@@ -71,6 +74,7 @@ class MoviesListCollectionViewController: UICollectionViewController {
             self.lbCollectionViewMessage.lineBreakMode = NSLineBreakMode.byWordWrapping
             self.lbCollectionViewMessage.numberOfLines = 0;
             self.collectionView.backgroundView = self.lbCollectionViewMessage
+            self.collectionView.reloadData()
         }
     }
     
@@ -82,79 +86,8 @@ class MoviesListCollectionViewController: UICollectionViewController {
     }
     
     func loadMovies() {
-
-        if loadingResults || (currentPage > 0 && totalOfPages > 0 && currentPage >= totalOfPages) {
-            debugPrint("[MoviesListCollectionViewController](loadMovies)  Não é possivel obter mais filmes \(loadingResults ? "pois está aguardando a resposta anterior" : "pois já chegou na última página")")
-            return
-        }
-        
-        
-        currentPage += 1
-        loadingResults = true
-        
-        if let searchQuery = searchText, movieListType == .search, !searchQuery.isEmpty {
-              debugPrint("[MoviesListCollectionViewController](Search) Página \(self.currentPage) solicitada")
-            TMDB_API().searchMovie(withName: searchQuery.sanitized, success:         { (tmdbSearch) in
-                if let tmdbInfo = tmdbSearch {
-                    self.totalOfPages = tmdbInfo.totalPages
-                    self.totalOfMovies = tmdbInfo.totalResults
-                    self.movies += tmdbInfo.movies
-                    debugPrint("[MoviesListCollectionViewController](Search) Total de Resultados: \(self.totalOfMovies) Total de Paginas: \(self.totalOfPages), Pagina Corrente: \(self.currentPage)")
-                    self.loadingResults = false
-                    if self.totalOfMovies <= 0 {
-                        self.showCollectionViewMessage(message: "Não foram encontrados resultados para a pesquisa")
-                    } else {
-                        self.clearColletionViewMessage()
-                    }
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                    }
-                }
-            }) { (error) in
-                debugPrint("[MoviesListCollectionViewController](Search)  Error on Fetch Seach results \(String(describing: error))")
-                self.loadingResults = false
-                self.clearSearchFlags()
-                self.showCollectionViewMessage(message: "Ops!! 😰😰😰😰😰😰😰")
-            }
-            
-        } else {
-            debugPrint("[MoviesListCollectionViewController](PopularMovies) Página \(self.currentPage) solicitada")
-            TMDB_API().loadMovies(page: currentPage, success: { (tmdbInfo) in
-                if let tmdbInfo = tmdbInfo {
-                    self.totalOfPages = tmdbInfo.totalPages
-                    self.totalOfMovies = tmdbInfo.totalResults
-                    self.movies += tmdbInfo.movies
-                    debugPrint("[MoviesListCollectionViewController](PopularMovies)  Total de Resultados: \(self.totalOfMovies) Total de Paginas: \(self.totalOfPages), Pagina Corrente: \(self.currentPage)")
-                    DispatchQueue.main.async {
-                        self.loadingResults = false
-                        self.clearColletionViewMessage()
-                        self.collectionView.reloadData()
-                    }
-                }
-            }) { (error) in
-               debugPrint("[MoviesListCollectionViewController](PopularMovies) Error of Fetch Results for Popular Movies")
-                self.clearSearchFlags()
-                self.loadingResults = false
-                DispatchQueue.main.async {
-                    self.showCollectionViewMessage(message: "Ops!! 😰😰😰😰😰😰😰")
-                    self.collectionView.reloadData()
-                }
-            }
-        }
+        viewModel.loadMovies(loadType: self.movieListType, searchString: searchText)
     }
-    
-    fileprivate func clearSearchFlags() {
-        movies.removeAll()
-        currentPage = 0
-        totalOfPages = 0
-        totalOfMovies = 0
-        searchText = nil
-        DispatchQueue.main.async {
-            self.collectionView.backgroundView = nil
-            self.collectionView.reloadData()
-        }
-    }
-    
     
 
     // MARK: - Navigation
@@ -166,6 +99,7 @@ class MoviesListCollectionViewController: UICollectionViewController {
         vc.movie = movies[indexPath.row]
     }
     
+    // MARK: - Change FlowLayoutType
     @IBAction func changeLayout(_ sender: UIBarButtonItem) {
         let flowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         if(flowLayout.itemSize.height > (flowLayoutInitialSize?.height)!){
@@ -183,7 +117,6 @@ class MoviesListCollectionViewController: UICollectionViewController {
         return 1
     }
 
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movies.count
     }
@@ -198,13 +131,6 @@ class MoviesListCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         movieSelected?(movies[indexPath.row])
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        if indexPath.row == movies.count - autoScrollIndex && !loadingResults && currentPage != totalOfPages{
-//            loadMovies()
-//            debugPrint("[MoviesListCollectionViewController] Carregando mais filmes. Atualmente Movies \(movies.count) de \(totalOfMovies)")
-//        }
     }
 
 }
@@ -231,7 +157,8 @@ extension MoviesListCollectionViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         debugPrint("[MoviesListCollectionVIewController](searchBarCancelButtonClicked)")
         movieListType = .popular
-        clearSearchFlags()
+        movies.removeAll()
+        searchText = nil
         loadMovies()
         searchBar.text = ""
         self.collectionView!.becomeFirstResponder()
@@ -241,7 +168,8 @@ extension MoviesListCollectionViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if let searchQuery = searchBar.text, !searchQuery.isEmpty {
-            clearSearchFlags()
+            movies.removeAll()
+            searchText = nil
             movieListType = .search
             self.showCollectionViewMessage(message: "Pesquisando.....")
             searchText = searchQuery
@@ -254,7 +182,7 @@ extension MoviesListCollectionViewController: UISearchBarDelegate {
 extension MoviesListCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        if loadingResults {
+        if viewModel.loadingResults {
             return CGSize.zero
         }
         return CGSize(width: collectionView.bounds.size.width, height: 55)
@@ -316,4 +244,35 @@ extension MoviesListCollectionViewController {
                 })
         }
     }
+}
+
+extension MoviesListCollectionViewController: MoviesCollectionDelegate {
+    func didRecieveMovies(movies: [MovieData]) {
+        self.movies += movies
+        DispatchQueue.main.async {
+            self.clearColletionViewMessage()
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func didRecieveSearchResults(movies: [MovieData]) {
+        if movies.isEmpty {
+            self.showCollectionViewMessage(message: "Não foram encontrados resultados para a pesquisa")
+            self.movies.removeAll()
+        } else {
+            self.clearColletionViewMessage()
+            self.movies += movies
+        }
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func didRecieveMoviesError(error: TMDBError) {
+        movies.removeAll()
+        searchText = nil
+        self.showCollectionViewMessage(message: "Ops!! 😰😰😰😰😰😰😰")
+    }
+
+    
 }
