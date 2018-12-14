@@ -1,0 +1,6 @@
+framework module Pods_MoviesWhishListUITests {
+  umbrella header "Pods-MoviesWhishListUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

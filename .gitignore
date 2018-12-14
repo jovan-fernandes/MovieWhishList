@@ -1,0 +1,64 @@
+## Build generated
+DerivedData/
+.DS_Store
+
+## Various settings
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+
+## Other
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+#
+# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+# Packages/
+# Package.pins
+#.build/
+
+# CocoaPods - Refactored to standalone file
+
+# Carthage 
+Carthage/Checkouts
+
+# fastlane
+
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+Gemfile
+Gemfile.lock
+.scannerwork/.sonar_lock
+.scannerwork/report-task.txt
+reports/cobertura.xml
+reports/lizard-report.xml
+reports/report.html
+reports/report.junit
+reports/swiftlint.txt
+sonar-reports/coverage-swift.xml
+sonar-reports/lizard-report.xml
+sonar-reports/PSMyAccount-swiftlint.txt
+sonar-reports/PSMyAccount-tailor.txt
+sonar-reports/TEST-report.xml
+sonar-reports/xcodebuild.log

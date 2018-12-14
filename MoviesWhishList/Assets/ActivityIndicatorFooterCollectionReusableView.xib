@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="qaj-Yu-PwT" customClass="ActivityIndicatorFooterCollectionReusableView" customModule="MoviesWhishList" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="95u-Lz-zgQ">
+                    <rect key="frame" x="169" y="6.5" width="37" height="37"/>
+                    <color key="color" red="1" green="0.20784313725490194" blue="0.5490196078431373" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
+                </activityIndicatorView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="95u-Lz-zgQ" firstAttribute="centerY" secondItem="qaj-Yu-PwT" secondAttribute="centerY" id="NJw-0T-Zgd"/>
+                <constraint firstItem="95u-Lz-zgQ" firstAttribute="centerX" secondItem="qaj-Yu-PwT" secondAttribute="centerX" id="xdY-QP-BlD"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="sGv-WR-UNG"/>
+            <connections>
+                <outlet property="refreshControlIndicator" destination="95u-Lz-zgQ" id="H9T-tF-HJ6"/>
+            </connections>
+            <point key="canvasLocation" x="81" y="79"/>
+        </collectionReusableView>
+    </objects>
+</document>
